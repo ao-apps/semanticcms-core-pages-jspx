@@ -24,6 +24,7 @@ package com.semanticcms.core.pages.jspx;
 
 import com.aoindustries.lang.NotImplementedException;
 import com.aoindustries.net.Path;
+import com.aoindustries.servlet.ServletContextCache;
 import com.aoindustries.validation.ValidationException;
 import com.semanticcms.core.model.Page;
 import com.semanticcms.core.pages.CaptureLevel;
@@ -86,11 +87,13 @@ public class JspxPages implements Pages {
 	}
 
 	final ServletContext servletContext;
+	final ServletContextCache cache;
 	final Path path;
 	final String prefix;
 
 	private JspxPages(ServletContext servletContext, Path path) {
 		this.servletContext = servletContext;
+		this.cache = ServletContextCache.getCache(servletContext);
 		this.path = path;
 		String pathStr = path.toString();
 		this.prefix = pathStr.equals("/") ? "" : pathStr;
@@ -121,7 +124,20 @@ public class JspxPages implements Pages {
 
 	@Override
 	public boolean exists(Path path) throws IOException {
-		throw new NotImplementedException();
+		String pathStr = path.toString();
+		String pathAdd = pathStr.endsWith("/") ? "index.jspx" : ".jspx";
+		int len =
+			prefix.length()
+			+ pathStr.length()
+			+ pathAdd.length();
+		String resourcePath =
+			new StringBuilder(len)
+			.append(prefix)
+			.append(pathStr)
+			.append(pathAdd)
+			.toString();
+		assert resourcePath.length() == len;
+		return cache.getResource(resourcePath) != null;
 	}
 
 	@Override
