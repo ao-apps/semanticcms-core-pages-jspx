@@ -29,7 +29,7 @@ import com.aoindustries.validation.ValidationException;
 import com.semanticcms.core.model.Page;
 import com.semanticcms.core.pages.CaptureLevel;
 import com.semanticcms.core.pages.PageNotFoundException;
-import com.semanticcms.core.pages.Pages;
+import com.semanticcms.core.pages.PageRepository;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,18 +38,18 @@ import javax.servlet.ServletContext;
 /**
  * Accesses JSPX pages in the local {@link ServletContext}.
  */
-public class JspxPages implements Pages {
+public class JspxPageRepository implements PageRepository {
 
-	private static final String INSTANCES_SERVLET_CONTEXT_KEY = JspxPages.class.getName() + ".instances";
+	private static final String INSTANCES_SERVLET_CONTEXT_KEY = JspxPageRepository.class.getName() + ".instances";
 
 	/**
 	 * Gets the JSPX repository for the given context and prefix.
-	 * Only one {@link JspxPages} is created per unique context and prefix.
+	 * Only one {@link JspxPageRepository} is created per unique context and prefix.
 	 *
 	 * @param  path  Must be a {@link Path valid path}.
 	 *               Any trailing slash "/" will be stripped.
 	 */
-	public static JspxPages getInstance(ServletContext servletContext, Path path) {
+	public static JspxPageRepository getInstance(ServletContext servletContext, Path path) {
 		// Strip trailing '/' to normalize
 		{
 			String pathStr = path.toString();
@@ -66,20 +66,20 @@ public class JspxPages implements Pages {
 			}
 		}
 
-		Map<Path,JspxPages> instances;
+		Map<Path,JspxPageRepository> instances;
 		synchronized(servletContext) {
 			@SuppressWarnings("unchecked")
-			Map<Path,JspxPages> map = (Map<Path,JspxPages>)servletContext.getAttribute(INSTANCES_SERVLET_CONTEXT_KEY);
+			Map<Path,JspxPageRepository> map = (Map<Path,JspxPageRepository>)servletContext.getAttribute(INSTANCES_SERVLET_CONTEXT_KEY);
 			if(map == null) {
-				map = new HashMap<Path,JspxPages>();
+				map = new HashMap<Path,JspxPageRepository>();
 				servletContext.setAttribute(INSTANCES_SERVLET_CONTEXT_KEY, map);
 			}
 			instances = map;
 		}
 		synchronized(instances) {
-			JspxPages repository = instances.get(path);
+			JspxPageRepository repository = instances.get(path);
 			if(repository == null) {
-				repository = new JspxPages(servletContext, path);
+				repository = new JspxPageRepository(servletContext, path);
 				instances.put(path, repository);
 			}
 			return repository;
@@ -91,7 +91,7 @@ public class JspxPages implements Pages {
 	final Path path;
 	final String prefix;
 
-	private JspxPages(ServletContext servletContext, Path path) {
+	private JspxPageRepository(ServletContext servletContext, Path path) {
 		this.servletContext = servletContext;
 		this.cache = ServletContextCache.getCache(servletContext);
 		this.path = path;
