@@ -123,6 +123,11 @@ public class JspxPageRepository implements PageRepository {
 	}
 
 	@Override
+	public boolean isAvailable() {
+		return true;
+	}
+
+	@Override
 	public boolean exists(Path path) throws IOException {
 		String pathStr = path.toString();
 		String pathAdd = pathStr.endsWith("/") ? "index.jspx" : ".jspx";
