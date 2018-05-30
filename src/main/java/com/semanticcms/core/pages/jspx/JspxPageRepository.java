@@ -1,6 +1,6 @@
 /*
  * semanticcms-core-pages-jspx - SemanticCMS pages produced by JSPX in the local servlet container.
- * Copyright (C) 2017  AO Industries, Inc.
+ * Copyright (C) 2017, 2018  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -28,9 +28,9 @@ import com.aoindustries.servlet.ServletContextCache;
 import com.aoindustries.validation.ValidationException;
 import com.semanticcms.core.model.Page;
 import com.semanticcms.core.pages.CaptureLevel;
-import com.semanticcms.core.pages.PageNotFoundException;
 import com.semanticcms.core.pages.local.LocalPageRepository;
 import java.io.IOException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.ServletContext;
@@ -128,7 +128,7 @@ public class JspxPageRepository extends LocalPageRepository {
 	}
 
 	@Override
-	public boolean exists(Path path) throws IOException {
+	public Page getPage(Path path, CaptureLevel captureLevel) throws IOException {
 		String pathStr = path.toString();
 		String pathAdd = pathStr.endsWith("/") ? "index.jspx" : ".jspx";
 		int len =
@@ -142,11 +142,9 @@ public class JspxPageRepository extends LocalPageRepository {
 			.append(pathAdd)
 			.toString();
 		assert resourcePath.length() == len;
-		return cache.getResource(resourcePath) != null;
-	}
-
-	@Override
-	public Page getPage(Path path, CaptureLevel captureLevel) throws IOException, PageNotFoundException {
+		URL resource = cache.getResource(resourcePath);
+		if(resource == null) return null;
+		// TODO: How to handle redirects?
 		throw new NotImplementedException();
 	}
 }
