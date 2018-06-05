@@ -36,6 +36,8 @@ import javax.servlet.ServletContext;
 /**
  * Accesses JSPX pages, with pattern *.jspx, in the local {@link ServletContext}.
  * Will not match *.inc.jspx.
+ *
+ * TODO: Block access to *.jspx in the page's local resources, block *.properties, too.
  */
 public class JspxPageRepository extends LocalPageRepository {
 
