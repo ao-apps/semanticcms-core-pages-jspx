@@ -1,6 +1,6 @@
 /*
  * semanticcms-core-pages-jspx - SemanticCMS pages produced by JSPX in the local servlet container.
- * Copyright (C) 2017, 2018, 2019  AO Industries, Inc.
+ * Copyright (C) 2017, 2018, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -27,10 +27,13 @@ import com.aoindustries.util.Tuple2;
 import com.semanticcms.core.pages.local.LocalPageRepository;
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
+import javax.servlet.annotation.WebListener;
 
 /**
  * Accesses JSPX pages, with pattern *.jspx, in the local {@link ServletContext}.
@@ -40,7 +43,29 @@ import javax.servlet.ServletContext;
  */
 public class JspxPageRepository extends LocalPageRepository {
 
-	private static final String INSTANCES_SERVLET_CONTEXT_KEY = JspxPageRepository.class.getName() + ".instances";
+	@WebListener
+	public static class Initializer implements ServletContextListener {
+		@Override
+		public void contextInitialized(ServletContextEvent event) {
+			getInstances(event.getServletContext());
+		}
+		@Override
+		public void contextDestroyed(ServletContextEvent event) {
+			// Do nothing
+		}
+	}
+
+	private static final String INSTANCES_APPLICATION_ATTRIBUTE = JspxPageRepository.class.getName() + ".instances";
+
+	private static ConcurrentMap<Path,JspxPageRepository> getInstances(ServletContext servletContext) {
+		@SuppressWarnings("unchecked")
+		ConcurrentMap<Path,JspxPageRepository> instances = (ConcurrentMap<Path,JspxPageRepository>)servletContext.getAttribute(INSTANCES_APPLICATION_ATTRIBUTE);
+		if(instances == null) {
+			instances = new ConcurrentHashMap<>();
+			servletContext.setAttribute(INSTANCES_APPLICATION_ATTRIBUTE, instances);
+		}
+		return instances;
+	}
 
 	/**
 	 * Gets the JSPX repository for the given context and path.
@@ -58,24 +83,14 @@ public class JspxPageRepository extends LocalPageRepository {
 			}
 		}
 
-		Map<Path,JspxPageRepository> instances;
-		synchronized(servletContext) {
-			@SuppressWarnings("unchecked")
-			Map<Path,JspxPageRepository> map = (Map<Path,JspxPageRepository>)servletContext.getAttribute(INSTANCES_SERVLET_CONTEXT_KEY);
-			if(map == null) {
-				map = new HashMap<>();
-				servletContext.setAttribute(INSTANCES_SERVLET_CONTEXT_KEY, map);
-			}
-			instances = map;
+		ConcurrentMap<Path,JspxPageRepository> instances = getInstances(servletContext);
+		JspxPageRepository repository = instances.get(path);
+		if(repository == null) {
+			repository = new JspxPageRepository(servletContext, path);
+			JspxPageRepository existing = instances.putIfAbsent(path, repository);
+			if(existing != null) repository = existing;
 		}
-		synchronized(instances) {
-			JspxPageRepository repository = instances.get(path);
-			if(repository == null) {
-				repository = new JspxPageRepository(servletContext, path);
-				instances.put(path, repository);
-			}
-			return repository;
-		}
+		return repository;
 	}
 
 	private JspxPageRepository(ServletContext servletContext, Path repositoryPath) {
