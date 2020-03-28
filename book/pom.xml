@@ -54,6 +54,11 @@ along with semanticcms-core-pages-jspx.  If not, see <http://www.gnu.org/license
 		<tag>HEAD</tag>
 	</scm>
 
+	<issueManagement>
+		<system>GitHub Issues</system>
+		<url>https://github.com/aoindustries/semanticcms-core-pages-jspx/issues</url>
+	</issueManagement>
+
 	<dependencyManagement>
 		<dependencies>
 			<!-- Java EE -->
