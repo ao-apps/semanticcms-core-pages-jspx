@@ -1,6 +1,6 @@
 /*
  * semanticcms-core-pages-jspx - SemanticCMS pages produced by JSPX in the local servlet container.
- * Copyright (C) 2017, 2018, 2019, 2020  AO Industries, Inc.
+ * Copyright (C) 2017, 2018, 2019, 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -57,9 +57,9 @@ public class JspxPageRepository extends LocalPageRepository {
 
 	private static final String INSTANCES_APPLICATION_ATTRIBUTE = JspxPageRepository.class.getName() + ".instances";
 
-	private static ConcurrentMap<Path,JspxPageRepository> getInstances(ServletContext servletContext) {
+	private static ConcurrentMap<Path, JspxPageRepository> getInstances(ServletContext servletContext) {
 		@SuppressWarnings("unchecked")
-		ConcurrentMap<Path,JspxPageRepository> instances = (ConcurrentMap<Path,JspxPageRepository>)servletContext.getAttribute(INSTANCES_APPLICATION_ATTRIBUTE);
+		ConcurrentMap<Path, JspxPageRepository> instances = (ConcurrentMap<Path, JspxPageRepository>)servletContext.getAttribute(INSTANCES_APPLICATION_ATTRIBUTE);
 		if(instances == null) {
 			instances = new ConcurrentHashMap<>();
 			servletContext.setAttribute(INSTANCES_APPLICATION_ATTRIBUTE, instances);
@@ -83,7 +83,7 @@ public class JspxPageRepository extends LocalPageRepository {
 			}
 		}
 
-		ConcurrentMap<Path,JspxPageRepository> instances = getInstances(servletContext);
+		ConcurrentMap<Path, JspxPageRepository> instances = getInstances(servletContext);
 		JspxPageRepository repository = instances.get(path);
 		if(repository == null) {
 			repository = new JspxPageRepository(servletContext, path);
@@ -103,7 +103,7 @@ public class JspxPageRepository extends LocalPageRepository {
 	}
 
 	@Override
-	protected Tuple2<String,RequestDispatcher> getRequestDispatcher(Path path) throws IOException {
+	protected Tuple2<String, RequestDispatcher> getRequestDispatcher(Path path) throws IOException {
 		String pathStr = path.toString();
 		// Do not match *.inc.jsp
 		if(pathStr.endsWith(".inc")) return null;
