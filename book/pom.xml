@@ -82,6 +82,11 @@ along with semanticcms-core-pages-jspx.  If not, see <http://www.gnu.org/license
 		<url>https://github.com/aoindustries/semanticcms-core-pages-jspx/issues</url>
 	</issueManagement>
 
+	<ciManagement>
+		<system>GitHub Actions</system>
+		<url>https://github.com/aoindustries/semanticcms-core-pages-jspx/actions</url>
+	</ciManagement>
+
 	<repositories>
 		<!-- Repository required here, too, so can find parent -->
 		<repository>
