@@ -71,20 +71,20 @@ along with semanticcms-core-pages-jspx.  If not, see <http://www.gnu.org/license
 	</developers>
 
 	<scm>
-		<connection>scm:git:git://github.com/aoindustries/semanticcms-core-pages-jspx.git</connection>
-		<developerConnection>scm:git:git@github.com:aoindustries/semanticcms-core-pages-jspx.git</developerConnection>
-		<url>https://github.com/aoindustries/semanticcms-core-pages-jspx</url>
+		<connection>scm:git:git://github.com/ao-apps/semanticcms-core-pages-jspx.git</connection>
+		<developerConnection>scm:git:git@github.com:ao-apps/semanticcms-core-pages-jspx.git</developerConnection>
+		<url>https://github.com/ao-apps/semanticcms-core-pages-jspx</url>
 		<tag>HEAD</tag>
 	</scm>
 
 	<issueManagement>
 		<system>GitHub Issues</system>
-		<url>https://github.com/aoindustries/semanticcms-core-pages-jspx/issues</url>
+		<url>https://github.com/ao-apps/semanticcms-core-pages-jspx/issues</url>
 	</issueManagement>
 
 	<ciManagement>
 		<system>GitHub Actions</system>
-		<url>https://github.com/aoindustries/semanticcms-core-pages-jspx/actions</url>
+		<url>https://github.com/ao-apps/semanticcms-core-pages-jspx/actions</url>
 	</ciManagement>
 
 	<repositories>
