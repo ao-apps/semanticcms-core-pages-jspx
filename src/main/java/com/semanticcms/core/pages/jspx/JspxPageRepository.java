@@ -51,6 +51,7 @@ public class JspxPageRepository extends LocalPageRepository {
     public void contextInitialized(ServletContextEvent event) {
       getInstances(event.getServletContext());
     }
+
     @Override
     public void contextDestroyed(ServletContextEvent event) {
       // Do nothing
@@ -58,7 +59,7 @@ public class JspxPageRepository extends LocalPageRepository {
   }
 
   private static final ScopeEE.Application.Attribute<ConcurrentMap<Path, JspxPageRepository>> INSTANCES_APPLICATION_ATTRIBUTE =
-    ScopeEE.APPLICATION.attribute(JspxPageRepository.class.getName() + ".instances");
+      ScopeEE.APPLICATION.attribute(JspxPageRepository.class.getName() + ".instances");
 
   private static ConcurrentMap<Path, JspxPageRepository> getInstances(ServletContext servletContext) {
     return INSTANCES_APPLICATION_ATTRIBUTE.context(servletContext).computeIfAbsent(__ -> new ConcurrentHashMap<>());
@@ -110,15 +111,15 @@ public class JspxPageRepository extends LocalPageRepository {
     }
     String pathAdd = pathStr.endsWith("/") ? "index.jspx" : ".jspx";
     int len =
-      prefix.length()
-      + pathStr.length()
-      + pathAdd.length();
+        prefix.length()
+            + pathStr.length()
+            + pathAdd.length();
     String resourcePath =
-      new StringBuilder(len)
-      .append(prefix)
-      .append(pathStr)
-      .append(pathAdd)
-      .toString();
+        new StringBuilder(len)
+            .append(prefix)
+            .append(pathStr)
+            .append(pathAdd)
+            .toString();
     assert resourcePath.length() == len;
     URL resource = cache.getResource(resourcePath);
     if (resource == null) {
