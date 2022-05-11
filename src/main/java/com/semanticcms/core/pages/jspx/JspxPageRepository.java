@@ -40,12 +40,16 @@ import javax.servlet.annotation.WebListener;
 /**
  * Accesses JSPX pages, with pattern *.jspx, in the local {@link ServletContext}.
  * Will not match *.inc.jspx.
- *
+ * <p>
  * TODO: Block access to *.jspx in the page's local resources, block *.properties, too.
+ * </p>
  */
 public class JspxPageRepository extends LocalPageRepository {
 
-  @WebListener
+  /**
+   * Initializes the *.jspx page repository during {@linkplain ServletContextListener application start-up}.
+   */
+  @WebListener("Initializes the *.jspx page repository during application start-up.")
   public static class Initializer implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent event) {
@@ -62,7 +66,7 @@ public class JspxPageRepository extends LocalPageRepository {
       ScopeEE.APPLICATION.attribute(JspxPageRepository.class.getName() + ".instances");
 
   private static ConcurrentMap<Path, JspxPageRepository> getInstances(ServletContext servletContext) {
-    return INSTANCES_APPLICATION_ATTRIBUTE.context(servletContext).computeIfAbsent(__ -> new ConcurrentHashMap<>());
+    return INSTANCES_APPLICATION_ATTRIBUTE.context(servletContext).computeIfAbsent(name -> new ConcurrentHashMap<>());
   }
 
   /**
@@ -73,13 +77,13 @@ public class JspxPageRepository extends LocalPageRepository {
    *               Any trailing slash "/" will be stripped.
    */
   public static JspxPageRepository getInstance(ServletContext servletContext, Path path) {
-    // Strip trailing '/' to normalize
-    {
-      String pathStr = path.toString();
-      if (!"/".equals(pathStr) && pathStr.endsWith("/")) {
-        path = path.prefix(pathStr.length() - 1);
+      // Strip trailing '/' to normalize
+      {
+        String pathStr = path.toString();
+        if (!"/".equals(pathStr) && pathStr.endsWith("/")) {
+          path = path.prefix(pathStr.length() - 1);
+        }
       }
-    }
 
     ConcurrentMap<Path, JspxPageRepository> instances = getInstances(servletContext);
     JspxPageRepository repository = instances.get(path);
