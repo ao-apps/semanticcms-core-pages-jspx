@@ -36,15 +36,15 @@ along with semanticcms-core-pages-jspx.  If not, see <https://www.gnu.org/licens
     <module.name>com.semanticcms.core.pages.jspx.book</module.name>
     <!-- These values are copied from the project being documented -->
     <documented.artifactId>semanticcms-core-pages-jspx</documented.artifactId>
-    <documented.name>SemanticCMS Core Pages JSPX²</documented.name>
+    <documented.name>SemanticCMS Core Pages JSPX</documented.name>
     <documented.description>SemanticCMS pages produced by JSPX in the local servlet container.</documented.description>
 
     <description.html><![CDATA[Documentation for <a target="${javadoc.target}" href="${project.url}">${documented.name}</a> in <a target="${javadoc.target}" href="https://semanticcms.com/">SemanticCMS</a> format.]]></description.html>
   </properties>
 
-  <name>SemanticCMS Core Pages JSPX² Book</name>
+  <name>SemanticCMS Core Pages JSPX Book</name>
   <url>https://semanticcms.com/core/pages/jspx/</url>
-  <description>Documentation for SemanticCMS Core Pages JSPX² in SemanticCMS format.</description>
+  <description>Documentation for SemanticCMS Core Pages JSPX in SemanticCMS format.</description>
   <inceptionYear>2017</inceptionYear>
 
   <licenses>

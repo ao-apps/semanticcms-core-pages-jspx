@@ -47,7 +47,7 @@ along with semanticcms-core-pages-jspx.  If not, see <https://www.gnu.org/licens
     <sonar.coverage.exclusions>**.*</sonar.coverage.exclusions>
   </properties>
 
-  <name>SemanticCMS Core Pages JSPX²</name>
+  <name>SemanticCMS Core Pages JSPX</name>
   <url>https://semanticcms.com/core/pages/jspx/</url>
   <description>SemanticCMS pages produced by JSPX in the local servlet container.</description>
   <inceptionYear>2017</inceptionYear>
