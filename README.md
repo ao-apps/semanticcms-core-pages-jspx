@@ -23,7 +23,7 @@
 * [Project Home](https://semanticcms.com/core/pages/jspx/)
 * [Changelog](https://semanticcms.com/core/pages/jspx/changelog)
 * [API Docs](https://semanticcms.com/core/pages/jspx/apidocs/)
-* [Maven Central Repository](https://search.maven.org/artifact/com.semanticcms/semanticcms-core-pages-jspx)
+* [Maven Central Repository](https://central.sonatype.com/search?namespace=com.semanticcms&q=a%3Asemanticcms-core-pages-jspx)
 * [GitHub](https://github.com/ao-apps/semanticcms-core-pages-jspx)
 
 ## Contact Us
