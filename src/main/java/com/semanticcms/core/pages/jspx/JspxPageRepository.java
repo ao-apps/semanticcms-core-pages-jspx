@@ -1,6 +1,6 @@
 /*
  * semanticcms-core-pages-jspx - SemanticCMS pages produced by JSPX in the local servlet container.
- * Copyright (C) 2017, 2018, 2019, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2017, 2018, 2019, 2020, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -40,9 +40,8 @@ import javax.servlet.annotation.WebListener;
 /**
  * Accesses JSPX pages, with pattern *.jspx, in the local {@link ServletContext}.
  * Will not match *.inc.jspx.
- * <p>
- * TODO: Block access to *.jspx in the page's local resources, block *.properties, too.
- * </p>
+ *
+ * <p>TODO: Block access to *.jspx in the page's local resources, block *.properties, too.</p>
  */
 public class JspxPageRepository extends LocalPageRepository {
 
