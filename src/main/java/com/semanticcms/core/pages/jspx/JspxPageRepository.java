@@ -1,6 +1,6 @@
 /*
  * semanticcms-core-pages-jspx - SemanticCMS pages produced by JSPX in the local servlet container.
- * Copyright (C) 2017, 2018, 2019, 2020, 2021, 2022, 2024  AO Industries, Inc.
+ * Copyright (C) 2017, 2018, 2019, 2020, 2021, 2022, 2024, 2025  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -76,13 +76,13 @@ public class JspxPageRepository extends LocalPageRepository {
    *               Any trailing slash "/" will be stripped.
    */
   public static JspxPageRepository getInstance(ServletContext servletContext, Path path) {
-      // Strip trailing '/' to normalize
-      {
-        String pathStr = path.toString();
-        if (!"/".equals(pathStr) && pathStr.endsWith("/")) {
-          path = path.prefix(pathStr.length() - 1);
-        }
+    // Strip trailing '/' to normalize
+    {
+      String pathStr = path.toString();
+      if (!"/".equals(pathStr) && pathStr.endsWith("/")) {
+        path = path.prefix(pathStr.length() - 1);
       }
+    }
 
     ConcurrentMap<Path, JspxPageRepository> instances = getInstances(servletContext);
     JspxPageRepository repository = instances.get(path);
